@@ -78,6 +78,11 @@
         "stack": "cpp",
         "thread": "cpp",
         "unordered_set": "cpp",
-        "forward_list": "cpp"
+        "forward_list": "cpp",
+        "clocale": "cpp",
+        "queue": "cpp",
+        "typeindex": "cpp",
+        "*.tcc": "cpp",
+        "memory_resource": "cpp"
     }
 }
