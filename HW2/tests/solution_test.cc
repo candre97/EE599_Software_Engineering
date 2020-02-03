@@ -321,3 +321,124 @@ TEST(ToLowerStr, EmptyTest) {
   std::string expected = "ERROR"; 
   EXPECT_EQ(actual, expected); 
 }
+
+///////////////////////////////////
+// Tests for Question 6
+///////////////////////////////////
+
+TEST(Palindrome, BasicTest) {
+  std::string in1 = "racecar"; 
+  bool actual = solution.FindPalindrome(in1); 
+  bool expected = true; 
+  EXPECT_EQ(actual, expected); 
+}
+
+TEST(PalindromeSentence, BasicTest) {
+  std::string in1 = "A man, a plan, a canal, Panama!"; 
+  bool actual = solution.FindApproxPalindrome(in1); 
+  bool expected = true; 
+  EXPECT_EQ(actual, expected); 
+}
+
+///////////////////////////////////
+// Tests for Question 7
+///////////////////////////////////
+
+
+TEST(StringMapper, BasicTest) {
+  std::string from = "add"; 
+  std::string to = "egg"; 
+  std::map<char,char> actual = solution.MapStrings(from,to); 
+  std::map<char, char> expected = {{'a', 'e'}, {'d', 'g'}};
+  EXPECT_EQ(actual.size(), expected.size()); 
+
+  std::map<char,char>::const_iterator it_e = expected.begin(); 
+  for(std::map<char,char>::const_iterator it_a = actual.begin();
+   it_a != actual.end(); it_a++) {
+    EXPECT_EQ(it_a->first, it_e->first); 
+    EXPECT_EQ(it_a->second, it_e->second); 
+    it_e++;
+  }
+}
+
+TEST(StringMapper, AnotherTest) {
+  std::string from = "aabbccdd"; 
+  std::string to = "eeffgghh"; 
+  std::map<char,char> actual = solution.MapStrings(from,to); 
+  std::map<char, char> expected = {{'a', 'e'}, {'b', 'f'}, {'c','g'}, {'d','h'}};
+  EXPECT_EQ(actual.size(), expected.size()); 
+  
+  std::map<char,char>::const_iterator it_e = expected.begin(); 
+  for(std::map<char,char>::const_iterator it_a = actual.begin();
+   it_a != actual.end(); it_a++) {
+    EXPECT_EQ(it_a->first, it_e->first); 
+    EXPECT_EQ(it_a->second, it_e->second); 
+    it_e++;
+  }
+}
+
+TEST(StringMapper, EmptyTest) {
+  std::string from = "aabbccdd"; 
+  std::string to = "eeffgghi"; 
+  std::map<char,char> actual = solution.MapStrings(from,to); 
+  std::map<char, char> expected;
+  EXPECT_EQ(actual.size(), expected.size()); 
+
+  std::map<char,char>::const_iterator it_e = expected.begin(); 
+  for(std::map<char,char>::const_iterator it_a = actual.begin();
+   it_a != actual.end(); it_a++) {
+    EXPECT_EQ(it_a->first, it_e->first); 
+    EXPECT_EQ(it_a->second, it_e->second); 
+    it_e++;
+  }
+}
+
+///////////////////////////////////
+// Tests for Question 8
+///////////////////////////////////
+
+TEST(RearrangeVect, BasicTestOdd) {
+  std::vector<int> v = {637, 231, 123, 43, 69, 43, 900, 10, 7, 21, 99, 0, 500}; 
+  std::vector<int> actual = solution.RearrangeVector(v); 
+  std::vector<int> expected = { 43, 43, 21,10, 7, 0, 69, 900, 637, 500, 231, 123, 99 };
+  EXPECT_EQ(actual.size(), expected.size()); 
+
+  for(int i = 0; i < v.size(); i++) {
+    EXPECT_EQ(expected[i], actual[i]);
+  }
+}
+
+TEST(RearrangeVect, SmallVectOdd) {
+  std::vector<int> v = {3,2,1}; 
+  std::vector<int> actual = solution.RearrangeVector(v); 
+  std::vector<int> expected = { 1,2,3};
+  EXPECT_EQ(actual.size(), expected.size()); 
+
+  for(int i = 0; i < v.size(); i++) {
+    EXPECT_EQ(expected[i], actual[i]);
+  }
+}
+
+TEST(RearrangeVect, BasicTestEven) {
+  std::vector<int> v = {637, 231, 123, 43, 43, 900, 10, 7, 21, 99, 0, 500}; 
+  std::vector<int> actual = solution.RearrangeVector(v); 
+  std::vector<int> expected = { 43, 43, 21,10, 7, 0, 900, 637, 500, 231, 123, 99 };
+  EXPECT_EQ(actual.size(), expected.size()); 
+
+  for(int i = 0; i < v.size(); i++) {
+    EXPECT_EQ(expected[i], actual[i]);
+  }
+}
+
+TEST(RearrangeVect, SmallVectEven) {
+  std::vector<int> v = {1,2,3,4}; 
+  std::vector<int> actual = solution.RearrangeVector(v); 
+  std::vector<int> expected = {2,1,4,3};
+  EXPECT_EQ(actual.size(), expected.size()); 
+
+  for(int i = 0; i < v.size(); i++) {
+    EXPECT_EQ(expected[i], actual[i]);
+  }
+}
+
+    

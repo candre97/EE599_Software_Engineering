@@ -6,6 +6,8 @@
 #include <array>
 #include <set>
 #include <iostream>
+#include <map>
+#include <algorithm>
 #define DEBUG         1
 
 
@@ -42,8 +44,14 @@ public:
   void ToLower(std::string &str); 
 
   // question 6
-  bool FindPalindrome(str::string &str); 
+  bool FindPalindrome(std::string &str); 
   bool FindApproxPalindrome(std::string &str); 
+
+  // question 7 
+  std::map<char,char> MapStrings(std::string &from, std::string &to); 
+
+  // question 8
+  std::vector<int> RearrangeVector(std::vector<int> &v); 
 };
 
 

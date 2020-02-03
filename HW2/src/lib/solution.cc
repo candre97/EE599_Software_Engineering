@@ -214,7 +214,7 @@ void Solution::ToLower(std::string &str) {
 // inputs:  1 str
 // outputs: bool if its a palindrome
 // runtime: O(str.len())
-bool Solution::FindPalindrome(str::string &str) {
+bool Solution::FindPalindrome(std::string &str) {
   int middle = (int) (str.length() / 2); 
   for(int i = 0; i < middle; i++) {
     if(str[i] != str[str.length() - 1 - i]) {
@@ -224,6 +224,77 @@ bool Solution::FindPalindrome(str::string &str) {
   return true; 
 }
 
+// Function 6.2: sentence palindrome
+// inputs:  1 str
+// outputs: bool if its a palindrome
+// runtime: O(2 * str.len()) = O(str.len())
 bool Solution::FindApproxPalindrome(std::string &str) {
+  std::string clean_str = "";
+  for(int i = 0; i < str.length(); i++) {
+    if(isalnum(str[i])) {
+      clean_str += std::tolower(str[i]); 
+    }
+  }
+#if DEBUG
+  std::cout << "cleaned: " << clean_str << std::endl; 
+#endif
+  return FindPalindrome(clean_str); 
+}
 
+
+////////////////////////////////////////////
+// Question 7
+///////////////////////////////////////////
+
+// Function 7.1: Char Mapping
+// inputs:  2 str
+// outputs: Map of characters 
+// runtime: O(n * (log n + log n)) = O(n logn)
+std::map<char, char> Solution::MapStrings(std::string &from, std::string &to) {
+  std::map<char, char> retval; 
+  std::map<char, char> empty; 
+  if(from.length() != to.length()) {
+    return empty; 
+  }
+  for(int i = 0; i < from.length(); i++) {
+    retval.insert(std::pair<char,char>(from[i],to[i])); 
+    if(retval.find(from[i])->second != to[i]) {
+      return empty; 
+    }
+  }
+  return retval; 
+}
+
+////////////////////////////////////////////
+// Question 8
+///////////////////////////////////////////
+
+// Function 8.1: 
+// inputs:  1 vect
+// outputs: Map of characters 
+// runtime: O(nlogn + n^2) = O(n^2), 
+// push_back can be up to linear in time when a relocation happens
+std::vector<int> Solution::RearrangeVector(std::vector<int> &v) {
+  std::vector<int> retval;
+  std::sort(v.begin(), v.end()); // n log n quicksort
+  int mid = (int) (v.size() / 2);
+
+  if(v.size() % 2 == 0) { // even case
+    for(int i = mid-1; i > -1; i--) {
+      retval.push_back(v[i]); 
+    }
+    for(int i = v.size() - 1; i > mid-1; i--) {
+      retval.push_back(v[i]); 
+    }
+  }
+  else { // odd case
+    for(int i = mid-1; i > -1; i--) {
+      retval.push_back(v[i]); 
+    }
+    retval.push_back(v[mid]); 
+    for(int i = v.size() - 1; i > mid; i--) {
+      retval.push_back(v[i]); 
+    }
+  }
+  return retval; 
 }
