@@ -17,7 +17,7 @@ following requirements:
 should return a string that will hold the concatenated value of both the inputs.
 */
 
-// Function 1.1:
+// Function 1.1:Add
 // inputs: 2 ints
 // outputs: 1 int
 // runtime: O(1)
@@ -25,7 +25,7 @@ int Solution::Add(int a, int b) {
   return (int) a + b; 
 }
 
-// Function 1.2:
+// Function 1.2:Add
 // inputs: 2 strings
 // outputs: 1 string
 // runtime: O(len(a) + len(b)) = O(n)
@@ -33,7 +33,7 @@ std::string Solution::Add(std::string &a, std::string &b) {
   return a + b; 
 }
 
-// Function 1.3:
+// Function 1.3:Add
 // inputs: 1 string, 1 int
 // outputs: 1 string
 // runtime: O(len(a) + len(str(b)) + TODO: find runtime of to_string()) = O(n)
@@ -41,7 +41,7 @@ std::string Solution::Add(std::string &a, int b) {
   return a + std::to_string(b); 
 }
 
-// Function 1.4:
+// Function 1.4:Add
 // inputs:  1 int, 1 string
 // outputs: 1 string
 // runtime: O(len(b) + len(str(a)) + O(1)) = O(n)
@@ -53,7 +53,7 @@ std::string Solution::Add(int a, std::string &b) {
 // Question 3
 ///////////////////////////////////////////
 
-// Function 3.1:
+// Function 3.1:RemoveDupsNoSet
 // inputs:  1 vector (by reference)
 // outputs: void -- changes input vector
 // runtime: O(n^2)
@@ -69,7 +69,7 @@ void Solution::RemoveDupsNoSet(std::vector<int> &v) {
   }
 }
 
-// Function 3.2:
+// Function 3.2:RemoveDups
 // inputs:  1 vector (by reference)
 // outputs: void -- changes input vector
 // runtime: O(n + nlogn) => O(nlogn)
@@ -78,7 +78,7 @@ void Solution::RemoveDups(std::vector<int> &v) {
   v.assign(s.begin(), s.end()); 
 }
 
-// Function 3.3:
+// Function 3.3:ReverseOrder
 // inputs:  1 vector (by reference)
 // outputs: void -- changes input vector
 // runtime: O(n/2) => O(n)
@@ -89,7 +89,7 @@ void Solution::ReverseOrder(std::vector<int> &v) {
   }
 }
 
-// Function 3.4:
+// Function 3.4:RemoveOdds
 // inputs:  1 vector (by reference)
 // outputs: void -- changes input vector
 // runtime: O(n)
@@ -102,7 +102,7 @@ void Solution::RemoveOdds(std::vector<int> &v) {
   }
 }
 
-// Function 3.5:
+// Function 3.5:ConcatVect
 // inputs:  2 vectors (by reference)
 // outputs: 1 vector of ints
 // runtime: O(n1 + n2) = O(n)
@@ -117,7 +117,7 @@ std::vector<int> Solution::ConcatVect(std::vector<int> &v1, std::vector<int> &v2
   return retval; 
 }
 
-// Function 3.4:
+// Function 3.4:UnionVect
 // inputs:  2 vectors (by reference)
 // outputs: 1 vector of ints
 // runtime: O(n1 * n2) = O(n^2)
