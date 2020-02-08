@@ -71,18 +71,44 @@ TEST(PushPopBack, EmptyTest) {
     ASSERT_EQ(sll.back(), 3);
     sll.pop_back();
     ASSERT_EQ(sll.empty(), true);
+    ASSERT_EQ(sll.size(), 0); 
+    sll.push_back(3);
+    sll.push_back(4);
+    sll.push_back(5);
+    ASSERT_EQ(sll.size(), 3); 
+}
+TEST(PushPopBack, HarderTest) {
+    SinglyLinkedList sll;
+    sll.push_back(3);
+    ASSERT_EQ(sll.back(), 3);
+    sll.push_back(3);
+    sll.push_back(4);
+    sll.push_back(5);
+    ASSERT_EQ(sll.size(), 4); 
+    ASSERT_EQ(sll.back(), 5); 
 }
 
-
 // void push_front(int i); // inserts at the front
+// void pop_front(); // removes the first item
+// int front(); // returns the value of first item
+TEST(PushPopFront, BasicTest) {
+    SinglyLinkedList sll;
+    sll.push_front(3);
+    ASSERT_EQ(sll.front(), 3);
+    sll.push_front(4); 
+    ASSERT_EQ(sll.front(), 4);
+    sll.pop_front();
+    ASSERT_EQ(sll.front(), 3);
+}
+
 // void insert_after(ListNode* p, int i); // inserts value i after p
 // void erase(ListNode* p); // Erases node p
-// void pop_front(); // removes the first item
 
-// int front(); // returns the value of first item
+
 // ListNode *GetBackPointer(); // Returns pointer to last item
 // // Returns pointer to i(th) element
 // ListNode *GetIthPointer(int i);
+
 // // for testing purposes... 
 // // this way tests can only worry about the int values in order. 
 // // the order and the "next" is tested in the way the vector is assembled.
