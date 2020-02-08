@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 struct ListNode {
   int val;
@@ -21,11 +22,9 @@ item’s next to i(th) item in the list.
 - If i is greater than input size, the last item’s next is nullptr. */
   SinglyLinkedList(const std::vector<int> &inputs, int i); 
 
-// Note do we need an actual destructor
-  ~SinglyLinkedList() {
-    std::cout << "DESTRUCTOR." << std::endl;
-    delete head_; 
-  }// destructor, cleans up
+// Note do we need an actual destructor-- need to loop through the ll delete everything
+  ~SinglyLinkedList();
+  // destructor, cleans up
 
   bool empty(); // checks if empty
   int size(); // returns size
@@ -37,15 +36,19 @@ item’s next to i(th) item in the list.
   void pop_back(); // removes the last item
   int back(); // returns the value of last item
   int front(); // returns the value of first item
-  
   ListNode *GetBackPointer(); // Returns pointer to last item
-  
   // Returns pointer to i(th) element
   ListNode *GetIthPointer(int i);
+  // for testing purposes... 
+  // this way tests can only worry about the int values in order. 
+  // the order and the "next" is tested in the way the vector is assembled.
+  std::vector<int> list_to_vect(ListNode* ptr);
 
   // Prints the list: ex. Empty list: {}. List with items: {1, 2, 3}
   void print();
   ListNode *head_; // Pointer to the first element, feels wrong as public
+
+  
 };
 
 #endif

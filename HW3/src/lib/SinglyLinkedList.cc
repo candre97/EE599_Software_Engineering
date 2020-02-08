@@ -1,11 +1,8 @@
 #include "SinglyLinkedList.h"
 
-// default constructor
+// default constructor --
 SinglyLinkedList::SinglyLinkedList() {
-  ListNode* ln(0); 
-  ln->next = nullptr;
-  ln->val = 0;
-  head_ = ln; 
+  head_ = nullptr; 
 }
 
 /* Creates a linked list out of vector “inputs” and connects the last
@@ -15,101 +12,204 @@ item’s next to i(th) item in the list.
 - assuming that i is the index of the tail, i <= size - 1
 */
 SinglyLinkedList::SinglyLinkedList(const std::vector<int> &inputs, int i) {
-  ListNode* temp(0); 
-
-  if(i == -1 || i > inputs.size()) {
-    ListNode* tail(0); 
-    tail->val = inputs[inputs.size()-1]; 
-    tail->next = nullptr; 
-    temp = tail; 
+  if((i  < 0) || (i > inputs.size()) || (i == inputs.size() - 1)) {
+    for(int j = 0; j < inputs.size(); j++) {
+      //std::cout << j << std::endl; 
+      push_back(inputs[j]);
+    }
   }
   else {
-    ListNode* tail(0); 
-    tail->val = inputs[i]; 
-    tail->next = nullptr; 
-    temp = tail; 
-  }
-  
-  for(int j = inputs.size() - 1; j > -1; j--) {
-    if(j == i) {
-      continue;
+    for(int j = i + 1; j < inputs.size(); j++) {
+      push_back(inputs[j]);
     }
-    ListNode* toAdd(0); 
-    toAdd->val = inputs[j];
-    toAdd->next = temp;
-    temp = toAdd; 
+    for(int j = 0; j <= i; j++) {
+      push_back(inputs[j]);
+    }
+    //push_back(inputs[i]); 
   }
-  head_ = temp; 
 }
 
 // destructor, cleans up
-// SinglyLinkedList::~SinglyLinkedList() { 
-//   // iterate through the list, delete every ListNode 
-// } 
+SinglyLinkedList::~SinglyLinkedList() { 
+  // iterate through the list, delete every ListNode 
+  ListNode* curr_node = head_; 
+  ListNode* next_node = nullptr;
+  while(curr_node != nullptr) {
+    next_node = curr_node->next; 
+    delete curr_node; 
+    curr_node = next_node; 
+  }
+} 
 
 // checks if empty
 bool SinglyLinkedList::empty() {
-  return (head_->next == nullptr);
+  return (head_ == nullptr);
 }
 
 // returns size
 int SinglyLinkedList::size() {
-
+  int retval = 0;
+  for(ListNode* ptr = head_; ptr != nullptr; ptr = ptr->next) {
+    retval++;
+  }
+  return retval; 
 }
 
 // inserts at the back
 void SinglyLinkedList::push_back(int i) {
-
+  if(empty()) {
+    push_front(i);  // stupid fix, but a fix nonetheless
+    return;
+  }
+  ListNode* ptr;
+  for(ptr = head_; ptr->next != nullptr; ptr = ptr->next) {
+  }
+  ListNode* new_tail = new ListNode(i); 
+  new_tail->next = nullptr; 
+  ptr->next = new_tail; 
 }
 
 // inserts at the front
 void SinglyLinkedList::push_front(int i) {
-
+  ListNode* new_head = new ListNode(i);
+  new_head->next = head_; 
+  head_ = new_head;  
 }
 
 // inserts value i after p
 void SinglyLinkedList::insert_after(ListNode* p, int i) {
-
+  if(i > size()) {
+    std::cout << "Error: i larger than list" << std::endl; 
+  }
+  if(i < 0) {
+    std::cout << "i less than zero, pushing front" << std::endl; 
+    push_front(p->val); 
+  }
+  ListNode* ptr = head_; 
+  for(ptr; ptr != nullptr; ptr = ptr->next) {
+    if(ptr->next == p->next && ptr->val == p->val) {
+      // this is the one!! 
+      // Note: initially tried checking for same memory addresses, didn't work! 
+      break; 
+    }
+  }
+  if(ptr == nullptr) {
+    std::cout << "Node p not found in list" << std::endl;
+    return; 
+  }
+  ListNode* toAdd = new ListNode(i); 
+  toAdd->next = ptr->next; 
+  ptr->next = toAdd; 
 }
 
 // Erases node p
 void SinglyLinkedList::erase(ListNode* p) {
-
+  ListNode* ptr = head_; 
+  ListNode* prev = ptr;
+  for(ptr; ptr != nullptr; ptr = ptr->next) {
+    if(ptr->next == p->next && ptr->val == p->val) {
+      // this is the one!! 
+      // Note: initially tried checking for same memory addresses, didn't work! 
+      break; 
+    }
+    prev = ptr; 
+  }
+  if(ptr == nullptr) {
+    std::cout << "Node p not found in list" << std::endl;
+    return; 
+  }
+  prev->next = ptr->next; 
+  ptr->next = nullptr; 
+  delete ptr; 
 }
 
-// removes the first item
+// removes the first item & delete from memory
 void SinglyLinkedList::pop_front() {
-  
+  if(empty()) {
+    return;
+  }
+  ListNode* to_remove = head_; 
+  head_ = to_remove->next; 
+  delete to_remove; 
 }
 
-// removes the last item
+// removes the last item & delete from memory
 void SinglyLinkedList::pop_back() {
-
+  if(empty()) {
+    return;
+  }
+  ListNode* ptr = head_; 
+  ListNode* prev = ptr; 
+  for(ptr; ptr->next != nullptr; ptr = ptr->next) {
+    // advance to last item in the linked list
+    prev = ptr; 
+  }
+  prev->next = nullptr; 
+  delete ptr; 
 }
 
 // returns the value of last item
 int SinglyLinkedList::back() {
-
+  ListNode* ptr = nullptr; 
+  for(ptr = head_; ptr->next != nullptr; ptr = ptr->next) {
+    // advance to last item in the linked list
+  }
+  return ptr->val; 
 }
 
 // returns the value of first item 
 int SinglyLinkedList::front() {
-
+  if(head_ == nullptr) {
+    return INT16_MIN; 
+  }
+  else {
+    return head_->val; 
+  }
+  return INT16_MIN; // compiler was complaining 
 }
 
 // Returns pointer to last item
 ListNode* SinglyLinkedList::GetBackPointer() {
-
+  ListNode* ptr = head_; 
+  for(ptr = head_; ptr->next != nullptr; ptr = ptr->next) {
+    // advance to last item in the linked list
+  }
+  return ptr; 
 }
 
-// Returns pointer to i(th) element
+// Returns pointer to i(th) element. head is at i = 0
 ListNode* SinglyLinkedList::GetIthPointer(int i) {
-
+  if(i > size() - 1 || i < 0) {
+    std::cout << "Error, index out of range" << std::endl;
+    return nullptr; 
+  }
+  ListNode* ith = head_; 
+  for(int j = 0; j < i; j++) {
+    ith = ith->next; 
+  }
+  return ith; 
 }
 
 // Prints the list: ex. Empty list: {}. List with items: {1, 2, 3}
 void SinglyLinkedList::print() {
-
+  std::cout << "{"; 
+  for(ListNode* ptr = head_; ptr != nullptr; ptr = ptr->next) {
+    std::cout << ptr->val; 
+    if(ptr->next != nullptr) {
+      std::cout << ", " ; 
+    }
+  }
+  std::cout << "}" << std::endl;
 }
+
+// called with head_ as parameter to convert full list to vector 
+std::vector<int> SinglyLinkedList::list_to_vect(ListNode* ptr) {
+  std::vector<int> retval = {};
+  for(ptr; ptr != nullptr; ptr = ptr->next) {
+    retval.push_back(ptr->val); 
+  }
+  return retval; 
+}
+
 
 //ListNode *head_; // Pointer to the first element, feels wrong as public
