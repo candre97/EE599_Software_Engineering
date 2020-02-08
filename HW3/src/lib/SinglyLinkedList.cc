@@ -32,6 +32,10 @@ SinglyLinkedList::SinglyLinkedList(const std::vector<int> &inputs, int i) {
 // destructor, cleans up
 SinglyLinkedList::~SinglyLinkedList() { 
   // iterate through the list, delete every ListNode 
+  if(size() == 0) {
+    delete head_; 
+    return; 
+  }
   ListNode* curr_node = head_; 
   ListNode* next_node = nullptr;
   while(curr_node != nullptr) {
@@ -138,6 +142,12 @@ void SinglyLinkedList::pop_back() {
   if(empty()) {
     return;
   }
+  if(size() == 1) {
+    head_->next = nullptr; 
+    head_ = nullptr; 
+    return; 
+  }
+  
   ListNode* ptr = head_; 
   ListNode* prev = ptr; 
   for(ptr; ptr->next != nullptr; ptr = ptr->next) {

@@ -4,10 +4,12 @@
 
 int main()
 {
-    std::vector<int> v = {1,2,3,4}; 
+    std::vector<int> v = {1,2,3}; 
     SinglyLinkedList sll(v,-1); 
     sll.print();
-    std::vector<int> v2 = sll.list_to_vect(sll.head_); 
-    std::cout << v2[0] << v2[1] << std::endl;
+    sll.pop_back(); 
+    sll.pop_back();
+    sll.pop_back();
+    std::cout << sll.size() << std::endl;
     return EXIT_SUCCESS;
 }
