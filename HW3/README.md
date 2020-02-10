@@ -35,40 +35,29 @@ Used when: you're passing in a large data type like a vector or string and want 
 // Question 3 implementation & Runtime Analysis -- 
 // See ListNode class
 /////////////////////////////////////////////////////
+-- Office hours: Gtest for constructor and destructor. 
+note: lots of runtimes are O(n)
+
+/////////////////////////////////////////////////////
+// Question 4 implementation & Runtime Analysis -- 
+// See solution_test class
+/////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////
+// Question 5 implementation & Runtime Analysis -- 
+// See AcademicRecord class
+/////////////////////////////////////////////////////
+note: lots of runtimes are O(1)
+
+/////////////////////////////////////////////////////
+// Question 6 implementation & Runtime Analysis -- 
+// See main.cc
+/////////////////////////////////////////////////////
+sample output in HW3/q6_sample_output.txt
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Default README.md: 
 
 
 # C++ Template for Bazel and Google Test
