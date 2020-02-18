@@ -17,6 +17,7 @@ std::vector<int> Solution::SquareNums(const std::vector<int>& v) {
   return ret; 
 }
 
+// runtime: O(n)
 int Solution::SumVect(const std::vector<int>& v) {
   int retval = std::accumulate(v.begin(), v.end(), 0); 
   return retval; 

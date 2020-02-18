@@ -161,7 +161,7 @@ bool BST::erase(int key) {
 
 // BFS QUESTION 4!!
 // BFS starting at root. Can be a subroot. 
-// runtime: O(n)
+// runtime: O(V+E) = O(vertexes + edges)
 std::vector<int> BST::BFS(TreeNode* root) {
   std::vector<int> retval = {};
   std::queue<TreeNode*> to_visit = {}; 
@@ -186,6 +186,7 @@ std::vector<int> BST::BFS(TreeNode* root) {
   return retval; 
 }
 
+// runtime: O(V+E)
 void BST::BFSPrint(TreeNode* root) {
   std::vector<int> r = BFS(root); 
   for(auto n : r) {
