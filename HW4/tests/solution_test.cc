@@ -84,3 +84,48 @@ TEST(SumVect, EmptyVect) {
   EXPECT_EQ(actual, expected);
 }
 
+///////////////////////////////////////
+// Question 5
+///////////////////////////////////////
+
+TEST(QueueSort, BasicTest) {
+  Solution solution;
+  std::vector<int> input = {5, 9, 3, 1, 7};
+  std::vector<int> expected = {1, 3, 5, 7, 9};
+  std::vector<int> actual = solution.QueueSort(input); 
+  EXPECT_EQ(actual.size(), expected.size());
+  for(int i = 0; i < actual.size(); i++) {
+      EXPECT_EQ(expected[i],actual[i]); 
+  }
+}
+
+TEST(QueueSort, EmptyTest) {
+  Solution solution;
+  std::vector<int> input = {};
+  std::vector<int> expected = {};
+  std::vector<int> actual = solution.QueueSort(input); 
+  EXPECT_EQ(actual.size(), expected.size());
+  for(int i = 0; i < actual.size(); i++) {
+      EXPECT_EQ(expected[i],actual[i]); 
+  }
+}
+
+///////////////////////////////////////
+// Question 6
+///////////////////////////////////////
+
+TEST(FindKthLargest, BasicTest) {
+  Solution solution;
+  std::vector<int> input = {5, 9, 3, 1, 7};
+  int actual = solution.FindKthLargest(input, 2); 
+  int expected = 7;
+  EXPECT_EQ(actual, expected);
+}
+
+TEST(FindKthLargest, OutOfRange) {
+  Solution solution;
+  std::vector<int> input = {5, 9, 3, 1, 7};
+  int actual = solution.FindKthLargest(input, 20); 
+  int expected = INT_MIN;
+  EXPECT_EQ(actual, expected);
+}

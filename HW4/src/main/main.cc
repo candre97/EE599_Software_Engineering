@@ -15,9 +15,10 @@ int main()
 {   
     Solution sol; 
     std::vector<int> input = {5, 9, 3, 1, 7};
-    std::vector<int> exp = {1, 3, 5, 7, 9};
-    std::vector<int> actual = sol.QueueSort(input); 
-    
-    PrintVect(actual); 
+    int res = sol.FindKthLargest(input, 40); 
+    std::cout << res << std::endl;
+
+    PrintVect(input); 
+
     return EXIT_SUCCESS;    
 }

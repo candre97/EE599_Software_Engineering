@@ -18,7 +18,9 @@ Question 5
 implemented in SolutionTest Class
 Tested in solution_test.cc
 
-
+Question 6
+implemented in SolutionTest Class
+Tested in solution_test.cc
 
 
 

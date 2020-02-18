@@ -31,8 +31,20 @@ std::vector<int> Solution::QueueSort(const std::vector<int>& v) {
     pq.push(n); 
   }
   while(pq.size() > 0) {
-    ret.insert(ret.begin(), pq.top()); 
+    ret.insert(ret.begin(), pq.top());
     pq.pop(); 
   }
   return ret; 
+}
+
+// Question 6
+// runtime (n)
+int Solution::FindKthLargest(std::vector<int>& v, int k) {
+  if(k > v.size()) {
+    return INT_MIN;
+  }
+  std::make_heap(v.begin(), v.end()); 
+  auto it = v.begin(); 
+  std::advance(it, k-1); 
+  return *it; 
 }
