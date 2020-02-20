@@ -5,6 +5,7 @@
 /////////////////////////////////
 
 // question 1
+// runtime: O(n)
 int BST::MaxDepthRec(TreeNode* root) {
   int l = 0;
   int r = 0; 
@@ -18,7 +19,9 @@ int BST::MaxDepthRec(TreeNode* root) {
   return std::max(l+1,r+1); 
 }
 
-// question 2 -- recursive implementation
+// question 2 -- 
+// part 1: recursive version
+// runtime: O(n)
 std::vector<int> BST::InOrderRec(TreeNode* a) {
   std::vector<int> ret;
   if(a != nullptr) {
@@ -31,7 +34,8 @@ std::vector<int> BST::InOrderRec(TreeNode* a) {
   return ret; 
 }
 
-// no-recursive version
+// part 2: non-recursive version 
+// runtime: O(n)
 std::vector<int> BST::InOrderNonRec() {
   std::vector<int> ret;
   TreeNode* curr = root_; 
@@ -48,7 +52,6 @@ std::vector<int> BST::InOrderNonRec() {
   }
  return ret; 
 }
-
 
 // to call this, insert at root, it will recursively call itself insert at 
 // TreeNode* root = Some node (root of a subtree)
