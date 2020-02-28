@@ -21,7 +21,6 @@ TEST(DFS, GivenTest) {
     EXPECT_EQ(actual[i], expected[i]); 
   }
 }
-
 TEST(DFS, DoesNotVisitAll) {
   std::map<int, std::set<int>> vertices{
     {0, {1}},
@@ -40,7 +39,6 @@ TEST(DFS, DoesNotVisitAll) {
     EXPECT_EQ(actual[i], expected[i]); 
   }
 }
-
 // test given in HW handout, tests a good amount of corner cases
 TEST(DFSAll, GivenTest) {
   // Print Hellow world!
@@ -61,4 +59,3 @@ TEST(DFSAll, GivenTest) {
     EXPECT_EQ(actual[i], expected[i]); 
   }
 }
-

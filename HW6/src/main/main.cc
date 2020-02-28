@@ -11,39 +11,19 @@ void PrintVect(std::vector<int> v) {
   for(auto n : v) {
     std::cout << n << ", "; 
   }
-  std::cout << "{ ";
+  std::cout << "} ";
   std::cout << "------------------" << std::endl; 
 }
 
 int main() {
-  // Print Hellow world!
-  std::vector<std::vector<int>> in1 = {
-    {1, 1, 0, 0, 0},
-    {1, 0, 1, 1, 1},
-    {1, 1, 0, 0, 1},
-    {1, 1, 0, 0, 1},
-    {1, 1, 1, 1, 1,}
-  };
+  Solution sol; 
+  std::vector<int> v = {9, 7, 5, 11, 12, 2, 14, 3, 10, 6}; 
+  //std::vector<int> v = {1,2,3,66,33,12,54,102,1002}; 
+  int i=0; 
+  sol.RearrangeVect(v,i); 
   
-  Maze* m = new Maze(in1); 
-  auto s = std::make_pair(0,0); 
-  auto f = std::make_pair(4,4);
-  bool ret = m->SearchMaze(s, f); 
-  std::cout << ret << std::endl; 
+  PrintVect(v); 
 
-std::vector<std::vector<int>> in2 = {
-      {1, 1, 0, 0, 0},
-      {1, 1, 1, 1, 1},
-      {0, 1, 0, 0, 1},
-      {1, 0, 0, 0, 0},
-      {1, 1, 1, 1, 1}
-  };
 
-  Maze* m2 = new Maze(in2); 
-  auto s2 = std::make_pair(1,2); 
-  auto f2 = std::make_pair(4,4);
-  bool ret2 = m2->SearchMaze(s2, f2); 
-  std::cout << ret2 << std::endl; 
-  
   return EXIT_SUCCESS;
 }

@@ -18,12 +18,16 @@ c d e g i i l n o o v
 
 Question 3
 Implementation and runtime is in Graph class
-Tests in graph_tests.cc
+Tests in graph_test.cc
 
 Question 4
 Implementation and runtime is in Graph class
-Tests in graph_tests.cc
+Tests in graph_test.cc
 
 Question 5
 Implementation and runtime is in Maze class
-Tests in maze_tests.cc
+Tests in maze_test.cc
+
+Question 6
+Implementation and runtime is in Solution class
+Tests in solution_test.cc

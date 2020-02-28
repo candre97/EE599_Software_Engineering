@@ -4,21 +4,14 @@
 #include <map>
 #include <string>
 #include <vector>
-
-// Person class is defined for demonstration
-struct Person {
-  std::string first_name;
-  std::string last_name;
-  int age;
-};
+#include <algorithm> 
+#include <iostream>
 
 class Solution {
 public:
-  std::string PrintHelloWorld();
-  Person *ReturnInvalidPointer();
-  int fib(int N);
-private:
-  std::map<int, int> _m;
+  // question 6
+  void RearrangeVect(std::vector<int>& v, int idx); 
+  void Partition (std::vector<int> v, int low, int high); 
 };
 
 #endif

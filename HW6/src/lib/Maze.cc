@@ -8,6 +8,7 @@ Maze::Maze(const std::vector<std::vector<int>>& m) {
 }
 
 // helper function to check if a square is a valid move. 
+// using the recursive approach because its much easier to visualize 
 // square is the index of potential move
 bool Maze::ValidMove(const std::pair<int,int>& square, const std::vector<std::vector<bool>>& searched) {
   int row = std::get<0>(square);
