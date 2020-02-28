@@ -6,13 +6,7 @@
 #include <vector>
 #include <stack>
 #include <utility> 
-
-// Person class is defined for demonstration
-struct Person {
-  std::string first_name;
-  std::string last_name;
-  int age;
-};
+#include <iostream>
 
 class Maze {
 public:

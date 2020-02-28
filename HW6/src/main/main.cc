@@ -1,5 +1,6 @@
 #include "src/lib/solution.h"
 #include "src/lib/Graph.h"
+#include "src/lib/Maze.h"
 #include <iostream>
 #include <map>
 #include <vector>
@@ -16,22 +17,33 @@ void PrintVect(std::vector<int> v) {
 
 int main() {
   // Print Hellow world!
-  std::vector<std::vector<int>> in = {
+  std::vector<std::vector<int>> in1 = {
     {1, 1, 0, 0, 0},
     {1, 0, 1, 1, 1},
     {1, 1, 0, 0, 1},
     {1, 1, 0, 0, 1},
     {1, 1, 1, 1, 1,}
   };
+  
+  Maze* m = new Maze(in1); 
+  auto s = std::make_pair(0,0); 
+  auto f = std::make_pair(4,4);
+  bool ret = m->SearchMaze(s, f); 
+  std::cout << ret << std::endl; 
 
-  std::vector<std::vector<bool>> b(5);
-  for(int i=0; i<b.size(); i++)
-  {
-    for(int j=0; j<b[0].size();j++)
-    std::cout << b[i][j] << " ";
-    std::cout << "\n";
-  }
-  PrintVect(in[0]); 
+std::vector<std::vector<int>> in2 = {
+      {1, 1, 0, 0, 0},
+      {1, 1, 1, 1, 1},
+      {0, 1, 0, 0, 1},
+      {1, 0, 0, 0, 0},
+      {1, 1, 1, 1, 1}
+  };
 
+  Maze* m2 = new Maze(in2); 
+  auto s2 = std::make_pair(1,2); 
+  auto f2 = std::make_pair(4,4);
+  bool ret2 = m2->SearchMaze(s2, f2); 
+  std::cout << ret2 << std::endl; 
+  
   return EXIT_SUCCESS;
 }

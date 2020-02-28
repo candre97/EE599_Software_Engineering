@@ -24,3 +24,6 @@ Question 4
 Implementation and runtime is in Graph class
 Tests in graph_tests.cc
 
+Question 5
+Implementation and runtime is in Maze class
+Tests in maze_tests.cc
