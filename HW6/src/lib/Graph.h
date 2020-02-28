@@ -9,6 +9,7 @@
 #include <iostream>
 #include <iterator> 
 #include <algorithm>
+#include <queue>
 
 struct Vertex {
   Vertex(int v, std::set<int> a) : vertex_number(v), adjacents(a) {}

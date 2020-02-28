@@ -41,7 +41,6 @@ TEST(DFS, DoesNotVisitAll) {
   }
 }
 
-
 // test given in HW handout, tests a good amount of corner cases
 TEST(DFSAll, GivenTest) {
   // Print Hellow world!
@@ -62,3 +61,4 @@ TEST(DFSAll, GivenTest) {
     EXPECT_EQ(actual[i], expected[i]); 
   }
 }
+

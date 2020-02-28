@@ -16,21 +16,22 @@ void PrintVect(std::vector<int> v) {
 
 int main() {
   // Print Hellow world!
-  std::map<int, std::set<int>> vertices{
-    {0, {1}},
-    {1, {2, 3}},
-    {2, {0}},
-    {3, {4, 6}},
-    {4, {}},
-    {5, {6}},
-    {6, {}}
+  std::vector<std::vector<int>> in = {
+    {1, 1, 0, 0, 0},
+    {1, 0, 1, 1, 1},
+    {1, 1, 0, 0, 1},
+    {1, 1, 0, 0, 1},
+    {1, 1, 1, 1, 1,}
   };
 
-  Graph g(vertices);
-
-  std::vector<int> ret = g.DFSAll(); 
-
-  PrintVect(ret); 
+  std::vector<std::vector<bool>> b(5);
+  for(int i=0; i<b.size(); i++)
+  {
+    for(int j=0; j<b[0].size();j++)
+    std::cout << b[i][j] << " ";
+    std::cout << "\n";
+  }
+  PrintVect(in[0]); 
 
   return EXIT_SUCCESS;
 }

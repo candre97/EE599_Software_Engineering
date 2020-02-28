@@ -34,12 +34,16 @@ std::vector<int> Graph::NonRecDFS(int root) {
   return ret; 
 }
 
+// runtime: O(n log n)
+// note optimized from the vector find function where 
+// that was going to be runtime of O(n^2) 
 std::vector<int> Graph::DFSAll() {
   auto it = v_.begin(); 
   std::vector<int> ret = NonRecDFS(it->first); 
+  std::set<int> s(ret.begin(), ret.end()); 
   // iterator through map, check for missing keys in ret
   while(it != v_.end()) {
-    if(std::find(ret.begin(), ret.end(), it->first) == ret.end()) {
+    if(s.find(it->first) == s.end()) {
       ret.push_back(it->first); 
     }
     it++;
