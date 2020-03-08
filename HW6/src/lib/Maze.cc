@@ -1,5 +1,6 @@
 #include "Maze.h"
 
+// runtime O(1)
 Maze::Maze(const std::vector<std::vector<int>>& m) {
   // if(m[0].size() != m.size()) {
   //   std::cout << "please give me a square maze" << std::endl; 
@@ -10,6 +11,7 @@ Maze::Maze(const std::vector<std::vector<int>>& m) {
 // helper function to check if a square is a valid move. 
 // using the recursive approach because its much easier to visualize 
 // square is the index of potential move
+// runtime: O(1)
 bool Maze::ValidMove(const std::pair<int,int>& square, const std::vector<std::vector<bool>>& searched) {
   int row = std::get<0>(square);
   int col = std::get<1>(square);
@@ -110,7 +112,6 @@ bool Maze::SearchMaze(std::pair<int,int>& start, std::pair<int,int>& finish) {
   if(row_f >= num_rows || col_f >= num_cols || row_f < 0 || col_f < 0) {
     return false;
   }
-
   std::vector<std::vector<bool>> b;
   std::vector<bool> temp = {}; 
   for(int i = 0; i < m_.size(); i++) {
