@@ -1,24 +1,31 @@
 #ifndef TEMPLATE_SOLUTION_H
 #define TEMPLATE_SOLUTION_H
 
-#include <map>
 #include <string>
 #include <vector>
+#include <iostream> 
+#include <queue>
+#include <map>
+#include <set>
+#include <algorithm> 
 
-// Person class is defined for demonstration
-struct Person {
-  std::string first_name;
-  std::string last_name;
-  int age;
-};
-
-class Solution {
+class Graph {
 public:
-  std::string PrintHelloWorld();
-  Person *ReturnInvalidPointer();
-  int fib(int N);
-private:
-  std::map<int, int> _m;
+  Graph(std::map<int, std::set<int>> &vertices) :
+  v_(vertices) {}
+  std::map<int, std::set<int>> v_;
+  std::map<int,int> BFSDistances(int root);
+  std::map<int, std::vector<int>> BFSPath(int root);
+  std::set<int> GetRoots(); 
+  std::vector<int> TopoSort();
+  std::map<int,int> GetDegrees(); 
+  
+  // would rather pass in graph using constructor
+  std::vector<bool> ContainedInPath(); 
+  std::vector<std::vector<int>> ShortestPaths(int from, int to); 
 };
+
+
+
 
 #endif

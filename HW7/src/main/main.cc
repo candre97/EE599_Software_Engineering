@@ -4,24 +4,40 @@
 #include <vector>
 
 int main() {
-  // Print Hellow world!
-  Solution s;
-  std::cout << s.PrintHelloWorld() << std::endl;
+  std::map<int, std::set<int>> in {
+    {0, {1,4,5}}, 
+    {1, {0,2,3}},
+    {2, {1,3,8}},
+    {3, {1,2}},
+    {4, {0}},
+    {5, {0,6}},
+    {6, {5,7,8}},
+    {7, {6,8}},
+    {8, {2,6,7}}
+  };
   
-  // Calculate Fibonacci numbers
-  std::vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-  std::map<int, int> results;
+  Graph g(in);
+  //std::vector<std::vector<int>> rs = g.ShortestPaths(0,8); 
+  std::map<int, std::vector<int>> actual = g.BFSPath(0);  
   
-  for (const auto i : v) {
-    int r = s.fib(i);
-    results[i] = r;
-    std::cout << "r: " << r << std::endl;
+  for(auto it = actual.begin(); it != actual.end(); it++) {
+    std::cout << it->first << ": "; 
+    for(auto n : it->second) {
+      std::cout << n << ", "; 
+    }
+    std::cout << std::endl; 
   }
+  
+  
+  /*std::cout << "vect: " << std::endl; 
+  for(auto vect : rs) {
+    std::cout << "{";
+    for(auto n : vect) {
+      std::cout << n << ", "; 
+    }
+    std::cout << "}" << std::endl; 
+  }*/
 
-  for (auto r : results) {
-    std::cout << "r.first: " << r.first << ", r.second: " << r.second
-              << std::endl;
-  }
-
-  return EXIT_SUCCESS;
+  
+  return EXIT_SUCCESS; 
 }
