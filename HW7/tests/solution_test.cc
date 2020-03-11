@@ -2,7 +2,9 @@
 #include "gtest/gtest.h"
 #include <vector>
 
-// QUESTION 3 tests!!
+/////////////////////////////////////////
+// Question 4
+/////////////////////////////////////////
 // test given in hw handout
 TEST(BFSDistances, StartAt1) {
   std::map<int, std::set<int>> vertices {
@@ -329,3 +331,56 @@ TEST(TopoSort, TwoRoots) {
   } 
 }
 
+/////////////////////////////////////////
+// Question 5
+/////////////////////////////////////////
+// example from the handout
+TEST(ContainedInPath, ProvidedExample) {
+  std::map<int, std::set<int>> in {
+    {0, {1,4,5}}, 
+    {1, {0,2,3}},
+    {2, {1,3,8}},
+    {3, {1,2}},
+    {4, {0}},
+    {5, {0,6}},
+    {6, {5,7,8}},
+    {7, {6,8}},
+    {8, {2,6,7}}
+  };
+  Graph g(in);
+  std::vector<bool> actual = g.ContainedInPath();  
+  std::vector<int> expected = {1, 1, 1, 0, 0, 1, 1, 0, 1}; 
+  ASSERT_EQ(actual.size(),expected.size()); 
+  auto a = actual.begin(); 
+  auto e = expected.begin(); 
+  while(a != actual.end()) {
+    EXPECT_EQ(*a, *e); 
+    a++;
+    e++;
+  } 
+}
+// one path only, same graph
+TEST(ContainedInPath, OnePath) {
+  std::map<int, std::set<int>> in {
+    {0, {1,4,5}}, 
+    {1, {0,2,3}},
+    {2, {1,3,8}},
+    {3, {1,2}},
+    {4, {0}},
+    {5, {0,6}},
+    {6, {5,7}}, // broke link from 6->8
+    {7, {6,8}},
+    {8, {2,7}}
+  };
+  Graph g(in);
+  std::vector<bool> actual = g.ContainedInPath();  
+  std::vector<int> expected = {1, 1, 1, 0, 0, 0, 0, 0, 1}; 
+  ASSERT_EQ(actual.size(),expected.size()); 
+  auto a = actual.begin(); 
+  auto e = expected.begin(); 
+  while(a != actual.end()) {
+    EXPECT_EQ(*a, *e); 
+    a++;
+    e++;
+  } 
+}

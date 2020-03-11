@@ -17,26 +17,31 @@ int main() {
   };
   
   Graph g(in);
-  //std::vector<std::vector<int>> rs = g.ShortestPaths(0,8); 
-  std::map<int, std::vector<int>> actual = g.BFSPath(0);  
+  std::vector<std::vector<int>> rs = g.ShortestPaths(0,8); 
+  //std::map<int, std::vector<int>> actual = g.ShortestPaths(0,8);  
   
-  for(auto it = actual.begin(); it != actual.end(); it++) {
-    std::cout << it->first << ": "; 
-    for(auto n : it->second) {
-      std::cout << n << ", "; 
-    }
-    std::cout << std::endl; 
+  // for(auto it = actual.begin(); it != actual.end(); it++) {
+  //   std::cout << it->first << ": "; 
+  //   for(auto n : it->second) {
+  //     std::cout << n << ", "; 
+  //   }
+  //   std::cout << std::endl; 
+  // }
+  std::vector<bool> b = g.ContainedInPath(); 
+  std::cout << "vect: " << std::endl; 
+  for(auto n:b) {
+    std::cout << n << ", ";
   }
+  std::cout << "}" << std::endl; 
   
-  
-  /*std::cout << "vect: " << std::endl; 
+  std::cout << "vect: " << std::endl; 
   for(auto vect : rs) {
     std::cout << "{";
     for(auto n : vect) {
       std::cout << n << ", "; 
     }
     std::cout << "}" << std::endl; 
-  }*/
+  }
 
   
   return EXIT_SUCCESS; 

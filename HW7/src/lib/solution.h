@@ -22,6 +22,7 @@ public:
   
   // would rather pass in graph using constructor
   std::vector<bool> ContainedInPath(); 
+  int FindMinInGraphButNotInVisited(const std::map<int, bool> visited);
   std::vector<std::vector<int>> ShortestPaths(int from, int to); 
 };
 

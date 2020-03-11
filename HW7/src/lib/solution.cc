@@ -51,7 +51,7 @@ std::map<int,std::vector<int>> Graph::BFSPath(int root) {
           paths[n].push_back(cur); 
         }
         else {
-          if(paths[n].size() > p.size() + 1) {
+          if(paths[n].size() > p.size()) {
             paths[n] = p;
             paths[n].push_back(cur); 
           }
@@ -135,47 +135,68 @@ std::vector<int> Graph::TopoSort() {
 ////////////////////////////////////////////////
 
 
+// O(V+E)
 std::vector<bool> Graph::ContainedInPath() {
-
+  std::vector<bool> ret(v_.size()); 
+  auto itr = v_.end(); 
+  itr--; 
+  std::vector<std::vector<int>> paths = ShortestPaths(v_.begin()->first, itr->first); 
+  for(auto vect : paths) {
+    for(auto node : vect) {
+      ret[node] = true; 
+    }
+  }
+  return ret;
 }
-std::vector<std::vector<int>> Graph::ShortestPaths(int from, int to) {
+
+// runtime: same as BFS: O(V+E)
+std::vector<std::vector<int>> Graph::ShortestPaths(int root, int to) {
   std::map<int, int> marks;
   std::map<int, std::vector<std::vector<int>>> mp_map; 
   std::queue<int> q;
-  int root = from; 
-  mp_map[root] = {{from}}; 
+  mp_map[root] = {{root}}; 
   q.push(root);
   marks[root] = 1;
   while (!q.empty()) {
     int cur = q.front();
     q.pop();
+    
     std::vector<std::vector<int>> paths = mp_map[cur]; 
     for (auto &n : v_[cur]) { // check all neighbors
       if (!marks[n]) {
         if(mp_map.count(n) == 0 ) {
           for(auto& vect : paths) {
-            vect.push_back(cur);
+            if(vect[vect.size()-1] != cur) {
+              vect.push_back(cur);
+            }
             mp_map[n].push_back(vect);
           }
         }
         else {
-          if(mp_map[n][0].size() > paths[0].size() + 1) {
+          if(mp_map[n][0].size() > paths[0].size()) {
             mp_map[n].clear();
+            //std::cout << "new path found" << std::endl;
             for(auto& vect : paths) {
-              vect.push_back(cur);
+              if(vect[vect.size()-1] != cur) {
+                vect.push_back(cur);
+              }
               mp_map[n].push_back(vect);  
             }
           }
-          if(mp_map[n].size() == paths[0].size() + 1) {
+          else if(mp_map[n][0].size() == paths[0].size()) {
             for(auto& vect : paths){
-              vect.push_back(cur); 
+              //std::cout << "equal path found, n= " << n << std::endl;
+              if(vect[vect.size()-1] != cur) {
+                vect.push_back(cur);
+              }
               mp_map[n].push_back(vect); 
             }
           }
         }
-        marks[n] = 1;
         q.push(n);
+        marks[cur] = 1; 
       }
+      
     }
   }
   for(auto it = mp_map.begin(); it != mp_map.end(); it++) {
@@ -185,57 +206,3 @@ std::vector<std::vector<int>> Graph::ShortestPaths(int from, int to) {
   }
   return mp_map[to]; 
 }
-
-/*
-// supports Multiple equal shortest paths
-// Runtime: Same at BFS: O(V + E)
-std::vector<std::vector<int>> Graph::ShortestPaths(int from, int to) {
-  std::map<int, int> marks;
-  std::map<int, std::vector<std::vector<int>>> paths = {{from, {}}}; 
-  std::queue<int> q;
-  q.push(from);
-  marks[from] = 1;
-  while (!q.empty()) {
-    int cur = q.front();
-    q.pop();
-    std::vector<std::vector<int>> p = paths[cur]; 
-    for (auto &n : v_[cur]) {
-      if (!marks[n]) {
-        if(paths.count(n) == 0) { // no path, append whatever
-          //paths[n] = p; 
-          for(int i = 0; i < p.size(); i++) {
-            std::vector<int> p1 = p[i]; 
-            p1.push_back(cur); 
-            paths[n].push_back(p1); 
-          }
-        }
-        else { // current path exists
-          // current path is longer, replace completely
-          if(paths[n][0].size() > p[0].size() + 1) {
-            paths[n].clear();
-            paths[n] = p;
-            for(auto& vect : paths[n]) {
-              vect.push_back(cur); 
-            }
-          }
-          // equal path, append to list of paths
-          if(paths[n][0].size() == p[0].size() + 1) {
-            for(int i = 0; i < p.size(); i++) {
-              p[i].push_back(cur); 
-              paths[n].push_back(p[i]); 
-            }
-          } 
-        }
-        marks[n] = 1;
-        q.push(n);
-      }
-    }
-  }
-  for(auto it = paths.begin(); it != paths.end(); it++) {
-    for(auto& vect : it->second) {
-      vect.push_back(it->first); 
-    }
-  }
-  return paths[to]; 
-}
-*/
