@@ -6,6 +6,10 @@
 #include <iostream>
 #include <ncurses.h>
 #include <sstream> // stringstream
+#include <unistd.h>
+
+#define WAIT_TIME   100*1000 // 10ms
+
 
 int main() {
   Solution solution;
@@ -44,23 +48,39 @@ int main() {
     input = getch(); 
     switch(input) {
       case KEY_UP:
+        if(snk->_dir != KEY_DOWN) {
+          snk->_dir = KEY_UP; 
+        }
         break;
       case KEY_DOWN:
+        if(snk->_dir != KEY_UP) {
+          snk->_dir = KEY_DOWN; 
+        }
         break; 
       case KEY_LEFT:
+        if(snk->_dir != KEY_RIGHT) {
+          snk->_dir = KEY_LEFT; 
+        }
         break;
       case KEY_RIGHT:
+        if(snk->_dir != KEY_LEFT) {
+          snk->_dir = KEY_RIGHT; 
+        }
         break;
       case 'q':
         end_of_game = true;
         break;
     } 
+    snk->MoveSnake();
+    int res = snk->CheckHeadPos(); 
+    usleep(WAIT_TIME); 
   }
+  
+  snk->DisplayScore();
 
-  while(getch() != 'q');    // Wait for user input to quit
+  
   endwin();
   std::cout << "H: " << h << std::endl <<  "W: " << w << std::endl; 
-
   std::cout << "Snake position: ";
   auto it = snk->_snake_loc.begin(); 
   for(it; it != snk->_snake_loc.end(); it++) {

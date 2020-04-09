@@ -19,8 +19,11 @@ public:
   Snake(int h, int w);  // constructor that draws the snake in starting position
   void CreateFood(); // create some new food on the Map
   void DisplayScore(); // display the score
+  void MoveSnake(); // does the heavy lifting of moving the snake
+  int CheckHeadPos(); // check where the head is now
 
-  std::list<std::pair<int,int>> _snake_loc;
+
+  std::vector<std::pair<int,int>> _snake_loc;
   std::pair<int,int> _food_loc;  
   int _width;   // of window
   int _height;  // of window

@@ -8,8 +8,9 @@ int main() {
   Solution solution;
 
   initscr();
-  solution.drawcircle(20, 10, 5);
-  refresh(); // Print it on to the real screen
+  move(10,10); 
+  addch('C'); 
+  //refresh(); // Print it on to the real screen
   getch();   // Wait for user input
   endwin();
   return 0;
