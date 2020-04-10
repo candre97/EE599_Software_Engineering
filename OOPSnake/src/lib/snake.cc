@@ -16,7 +16,7 @@ Snake::Snake(int h, int w) {
   _height = h; 
   _width = w; 
   int row = (int ) _height / 4; 
-  int col = (int ) _width / 4 + INIT_SNAKE_LEN;
+  int col = (int ) (_width / 4) + INIT_SNAKE_LEN;
   for(int i = 0; i < INIT_SNAKE_LEN; i++) {
     addch(SNAKE_CHAR); 
     auto p = std::make_pair(row,col); 
@@ -44,32 +44,49 @@ void Snake::DisplayScore() {
   while(getch() != 'q');    // Wait for user input to quit
 }
 
-// new head position given by the
-void Snake::MoveSnake() {
-  
-  auto it = _snake_loc.end(); 
-  it--; 
-  for(it; it != _snake_loc.begin(); it--) {
+void Snake::DrawSnake() {
 
+}
+
+void Snake::EraseSnake() {
+
+}
+
+// new head position calculated using direction
+// this function is called every WAIT_TIME depending on difficulty
+void Snake::MoveSnake() {
+  // erase tail
+  int old = _snake_loc.size() - 1; 
+  // move(_snake_loc[old].first, _snake_loc[old].second); 
+  // addch(' '); 
+  
+  while(old > 1) {
+    _snake_loc[old] = _snake_loc[old-1]; 
+    old--;
   }
 
   switch (_dir)
   {
   case KEY_LEFT:
     /* code */
+    _snake_loc[0].second = _snake_loc[0].second - 1;
     break;
   case KEY_RIGHT:
     /* code */
+    _snake_loc[0].second = _snake_loc[0].second + 1;
     break;
   case KEY_UP:
     /* code */
+    _snake_loc[0].first = _snake_loc[0].first - 1;
     break;
   case KEY_DOWN:
     /* code */
+    _snake_loc[0].first = _snake_loc[0].first + 1;
     break;
   default:
     break;
   }
+  //move(_snake_loc[0].first, _snake_loc[0].second);  
 }
 
 int Snake::CheckHeadPos(){

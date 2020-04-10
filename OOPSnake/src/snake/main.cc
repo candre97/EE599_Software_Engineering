@@ -72,13 +72,12 @@ int main() {
         break;
     } 
     snk->MoveSnake();
-    int res = snk->CheckHeadPos(); 
-    usleep(WAIT_TIME); 
+    //int res = snk->CheckHeadPos(); 
+    //usleep(WAIT_TIME); 
   }
   
   snk->DisplayScore();
 
-  
   endwin();
   std::cout << "H: " << h << std::endl <<  "W: " << w << std::endl; 
   std::cout << "Snake position: ";

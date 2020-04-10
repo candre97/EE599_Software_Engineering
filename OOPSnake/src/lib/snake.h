@@ -21,7 +21,8 @@ public:
   void DisplayScore(); // display the score
   void MoveSnake(); // does the heavy lifting of moving the snake
   int CheckHeadPos(); // check where the head is now
-
+  void EraseSnake(); 
+  void DrawSnake(); 
 
   std::vector<std::pair<int,int>> _snake_loc;
   std::pair<int,int> _food_loc;  
