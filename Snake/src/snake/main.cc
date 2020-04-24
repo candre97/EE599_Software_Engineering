@@ -1,5 +1,4 @@
-#include "src/lib/solution.h"
-#include "src/lib/snake_helper.h"
+#include <ncurses.h>
 #include <iostream>
 //#include <ncurses.h>
 #include <string>
@@ -17,7 +16,7 @@
 #define INIT_SNAKE_LEN   5
 #define FOOD_CHAR        ACS_CKBOARD
 #define SNAKE_CHAR       ACS_DIAMOND
-
+#define CHECK_INPUT      1
 
 // snake variables
 std::list<std::pair<int,int>> _sl;  // snake location
@@ -25,7 +24,7 @@ std::pair<int,int> _fl;             // food location
 int _width = 0;   // of window
 int _height = 0;  // of window
 int _score = 0;   // score
-int _dir = KEY_DOWN;     // direction of travel
+int _dir = KEY_RIGHT;     // direction of travel
 
 // game variables
 int game_over = 0; // control for end of game
@@ -59,6 +58,7 @@ void CreateFood();
 // Display the final score, called at the end of the game
 void DisplayScore(); 
 
+void NewHighScore(); 
 /* called every time the snake moves to a new square to check for:
 // 1. Snake bit himself
 // 2. Snake hit wall
@@ -75,12 +75,13 @@ void MoveSnake();
 void UpdateSnake() {
   while(!game_over) {
     MoveSnake(); 
-    std::this_thread::sleep_for(std::chrono::milliseconds(update_freqs[difficulty-1])); 
+    std::this_thread::sleep_for(std::chrono::milliseconds(update_freqs[difficulty-1] - (2*_score))); 
   }
 }
 
 void GetInput() {
   while(!game_over) {
+#if CHECK_INPUT
     int in = getch(); 
     //_dir = in; 
     switch(in) {
@@ -107,18 +108,39 @@ void GetInput() {
       case 'q':
         game_over = true;
         break;
-    } 
+    }
+  
+#else
+  _dir = getch(); 
+#endif
   }
 }
 
-int main() {
-  
+int main(int argc, char *argv[])  {
+
+  char again = 'y'; 
+
   do
   {
-    std::cout << "Welcome to the retro C++ Snake Game" << std::endl << std::endl; 
-    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
-    std::cout << "For best results make your Terminal FULL SCREEN!" << std::endl << std::endl; 
-    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    if(argc == 1) { // no previous high score 
+      std::cout << "Welcome to the retro C++ Snake Game" << std::endl << std::endl; 
+      std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+      std::cout << "For best results make your Terminal FULL SCREEN!" << std::endl << std::endl; 
+      std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    }
+    else if (argc == 2) {
+      char* p;
+      long converted = strtol(argv[1], &p, 10);
+      if (*p) {
+        // conversion failed because the input wasn't a number
+        std::cout << "Couldn't load previous high score" << std::endl; 
+      }
+      else {
+        // use converted
+        high_score = converted; 
+        std::cout << "Loaded Previous High Score: " << high_score << std::endl; 
+      }
+    }
     std::cout << "Please select from the following levels of difficulty: " << std::endl;
     std::cout << "\t1) Novice" << std::endl; 
     std::cout << "\t2) Intermediate" << std::endl; 
@@ -152,31 +174,51 @@ int main() {
     exit(1);
   }
   // create box outline of playing area
+  clear(); 
   box(stdscr, 0 , 0); 
+  refresh();
   int h, w;
   getmaxyx(stdscr, h, w);
   InitSnake(h,w); 
   CreateFood(); 
-
-  // make the user start the game by giving the first direction right or down
-  do
-  {
-    _dir = getch(); 
-  } while (_dir != KEY_RIGHT);
+  refresh();
   
+  // sleep for 1 second, then start the game
+  std::this_thread::sleep_for(std::chrono::seconds(1)); 
+  _dir = KEY_RIGHT; 
+
   refresh();
   std::thread m(UpdateSnake); 
   m.detach(); 
 
   std::thread in(GetInput);
   in.join();  // main thread stops here until input thread is done... 
-
+  getch(); 
+  
+  
+  
+  if(_score > high_score) {
+    std::cout << "NEW HIGH SCORE: " << _score  << std::endl << std::endl; 
+    high_score = _score;
+    NewHighScore(); 
+    getch(); 
+  }
   clear(); 
   endwin();
-  std::cout << std::endl; 
+
+  std::cout << std::endl << "Current High Score: " << high_score << std::endl;; 
+  std::cout << "Want to play again? [y/n]: ";
+  std::cin >> again;  
   
-  std::cout << "Thanks for playing the C++ Snake Game!" << std::endl; 
-  std::cout << "Goodbye!" << std::endl << std::endl; 
+  if(again == 'y') {
+    std::string com = "cd ~/Documents/Spring_2020/EE599/Homeworks/EE599_Software_Engineering/Snake; ./bazel-bin/src/snake/main " + std::to_string(high_score); 
+    system(com.c_str()); 
+  }
+  else {
+    std::cout << std::endl << "Thanks for playing the C++ Snake Game!" << std::endl; 
+    std::cout << "High Score for the Day: " << high_score << std::endl; 
+    std::cout << "Goodbye!" << std::endl << std::endl; 
+  }
 
   return 0;
 }
@@ -189,6 +231,7 @@ void InitSnake(int h, int w) {
   _score = 0;
   _height = h; 
   _width = w; 
+  _sl.clear(); 
   int row = (int ) _height / 4; 
   int col = (int ) (_width / 4) + INIT_SNAKE_LEN;
   attron(COLOR_PAIR(snake_color)); // Change color
@@ -215,14 +258,23 @@ void CreateFood() {
 }
 
 // Display the final score, called at the end of the game
+void NewHighScore() {
+  // clear screen
+  attron(COLOR_PAIR(b_and_w));
+  clear(); 
+  std::string score = "NEW HIGH SCORE: " + std::to_string(high_score); 
+  mvwprintw(stdscr, _height/2, _width/2-5, "%s", score.c_str());
+}
+
+// Display the final score, called at the end of the game
 void DisplayScore() {
   // clear screen
   attron(COLOR_PAIR(b_and_w));
   clear(); 
   std::string score = "Your Score: " + std::to_string(_score); 
   mvwprintw(stdscr, _height/2 - 3, _width/2-5, "%s", score.c_str());
-  std::string quit = "Press any key to quit"; 
-  mvwprintw(stdscr, _height/2 + 3, _width/2-8, "%s", quit.c_str());
+  std::string quit = "Press any key"; 
+  mvwprintw(stdscr, _height/2 + 3, _width/2-6, "%s", quit.c_str());
 }
 
 void AddSegmentFront() {
@@ -281,9 +333,8 @@ int CheckHeadPos() {
   else if(head.first < 1 || head.second < 1 || 
           head.first > _height-2 || head.second > _width-2) {
     game_over = wall; 
-    DisplayScore();
-    getch(); 
-    endwin(); 
+    // DisplayScore();
+    // getch(); 
     return wall; 
   }
   auto itr = _sl.begin(); 
@@ -291,9 +342,8 @@ int CheckHeadPos() {
   for(itr; itr != _sl.end(); itr++) {
     if(*itr == head) {
       game_over = snake;
-      DisplayScore();
-      getch(); 
-      endwin(); 
+      // DisplayScore();
+      // getch(); 
       return snake; 
     }
   }
@@ -314,9 +364,11 @@ void MoveSnake() {
   if(res == wall) {
     clear(); 
     DisplayScore(); 
+    getch();
   }
   else if(res == snake) {
     clear(); 
     DisplayScore();
+    getch();
   }
 }
