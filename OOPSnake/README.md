@@ -7,8 +7,7 @@ This is a starter template for building C++ binaries using ncurses library and [
 [ncurses](https://www.gnu.org/software/ncurses/) (new curses) is a  library providing a set of APIs that allows the programmer to write text-based user interfaces in a terminal-independent manner. It is a toolkit for developing "GUI-like" application software that runs under a terminal emulator. It also optimizes screen changes, in order to reduce the latency experienced when using remote shells.
 
 ## Screenshot
-
-<img alt="Screenshot" src="screenshot" width="600">
+![](screenshot.png)
 
 
 ## How to install ncurses
