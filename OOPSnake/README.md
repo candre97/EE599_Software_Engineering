@@ -8,7 +8,7 @@ This is a starter template for building C++ binaries using ncurses library and [
 
 ## Screenshot
 
-<img alt="Screenshot" src="https://raw.githubusercontent.com/ourarash/ncurses_hello_world/master/screenshot.gif" width="600">
+<img alt="Screenshot" src="screenshot" width="600">
 
 
 ## How to install ncurses
@@ -36,7 +36,7 @@ git clone https://github.com/ourarash/cpp-template.git
 You can run this using `blaze`:
 
 ```bash
-bazel run src/hello_world_scroll_main:main
+bazel run src/main:main
 ```
 
 ### Run Tests:
