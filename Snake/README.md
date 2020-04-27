@@ -12,7 +12,7 @@
 - Safe multithreading using a Mutex
 - Highly modular design
 
-## Screenshot
+## Gameplay Demo
 ![](demogif.gif)
 
 ## How to install ncurses
