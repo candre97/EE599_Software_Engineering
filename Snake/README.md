@@ -13,7 +13,7 @@
 - Highly modular design
 
 ## Screenshot
-![](screenshot.png)
+![](demogif.gif)
 
 ## How to install ncurses
 Well installing ncurses library is an easy task, you just have to follow the steps listed below:
