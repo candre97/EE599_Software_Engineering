@@ -4,6 +4,13 @@
 
 [ncurses](https://www.gnu.org/software/ncurses/) (new curses) is a  library providing a set of APIs that allows the programmer to write text-based user interfaces in a terminal-independent manner. It is a toolkit for developing "GUI-like" application software that runs under a terminal emulator. It also optimizes screen changes, in order to reduce the latency experienced when using remote shells.
 
+## Features
+- Safe multithreading using a Mutex
+- 90's style graphics using Ncurses library
+- Ability to keep track of high score for a round
+- Highly modular design
+
+
 ## Screenshot
 ![](screenshot.png)
 
