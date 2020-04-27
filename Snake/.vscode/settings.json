@@ -73,10 +73,12 @@
     "clocale": "cpp",
     "codecvt": "cpp",
     "condition_variable": "cpp",
+    "forward_list": "cpp",
     "list": "cpp",
     "numeric": "cpp",
     "queue": "cpp",
     "random": "cpp",
+    "unordered_set": "cpp",
     "*.tcc": "cpp",
     "memory_resource": "cpp"
   }
