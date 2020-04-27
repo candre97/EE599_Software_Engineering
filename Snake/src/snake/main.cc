@@ -271,6 +271,20 @@ void DisplayScore() {
   // clear screen
   attron(COLOR_PAIR(b_and_w));
   clear(); 
+  std::string cod = "Cause of Death: "; 
+  switch (game_over)
+  {
+    case snake:
+      cod += "Bit Yourself"; 
+      break;
+    case wall:
+      cod += "Hit Wall"; 
+      break;
+    default:
+      cod += "ERROR"; 
+      break;
+  }
+  mvwprintw(stdscr, _height/2 - 8, _width/2-10, "%s", cod.c_str());
   std::string score = "Your Score: " + std::to_string(_score); 
   mvwprintw(stdscr, _height/2 - 3, _width/2-5, "%s", score.c_str());
   std::string quit = "Press any key"; 

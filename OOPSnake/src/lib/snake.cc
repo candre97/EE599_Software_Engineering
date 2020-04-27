@@ -1,95 +1,126 @@
 #include "snake.h"
 
-// initialize and draw the first food
-void Snake::CreateFood() {
-  std::srand(std::time(nullptr)); 
-  int col = std::rand() % (_width - 8); 
-  int row = std::rand() % (_height - 8); 
-  move(row,col); 
-  addch(FOOD_CHAR); 
-  _food_loc = std::make_pair(row,col); 
-}
-
-// initialize and draw the snake
+///////////////////////////////////////////////
+// Snake Helper Functions
+//////////////////////////////////////////////
+// initialize the snake
 Snake::Snake(int h, int w) {
-  _score = 0;
   _height = h; 
   _width = w; 
+  _sl.clear(); 
+  _dir = KEY_RIGHT; 
   int row = (int ) _height / 4; 
   int col = (int ) (_width / 4) + INIT_SNAKE_LEN;
+  attron(COLOR_PAIR(snake_color)); // Change color
   for(int i = 0; i < INIT_SNAKE_LEN; i++) {
+    move(row,col); 
     addch(SNAKE_CHAR); 
     auto p = std::make_pair(row,col); 
-    _snake_loc.push_back(p); 
+    _sl.push_back(p); 
     col--;
-    move(row,col); 
   }
+  refresh(); 
 }
 
-// display the score, for the end of the game
-void Snake::DisplayScore() {
-  // clear snake
-  for(auto p : _snake_loc) {
-    move(p.first, p.second); 
-    addch(' '); 
+// create food at some random point in the window
+// displays this to the window
+void Snake::CreateFood() {
+  std::srand(std::time(nullptr)); 
+  int col = std::rand() % (_width - 8) + 2; 
+  int row = std::rand() % (_height - 8) + 2; 
+  move(row,col); 
+  attron(COLOR_PAIR(food_color)); // Change color
+  addch(FOOD_CHAR); 
+  _fl = std::make_pair(row,col); 
+  refresh(); 
+}
+
+// helper function to add a segment to the front
+void Snake::AddSegmentFront() {
+  // add some snake length!!
+  auto p = _sl.front(); 
+  switch (GetSDir())
+  { //row, h, 1st
+    // col, w, 2nd
+    case KEY_LEFT:
+      /* code */
+      p.second = std::max(0,p.second-1); 
+      break;
+    case KEY_RIGHT:
+      /* code */
+      p.second = std::min(p.second+1, _width); 
+      break;
+    case KEY_UP:
+      /* code */
+      p.first = std::max(0, p.first-1);
+      break;
+    case KEY_DOWN:
+      /* code */
+      p.first = std::min(p.first+1, _height); 
+      break;
+    default:
+      break;
   }
-  move(_food_loc.first, _food_loc.second); 
-  addch(' '); 
+  _sl.push_front(p); 
 
-  std::string score = "Your Score: " + std::to_string(_score); 
-  mvwprintw(stdscr, _height/2 - 3, _width/2-5, "%s", score.c_str());
-
-  std::string quit = "Press q to quit"; 
-  mvwprintw(stdscr, _height/2 + 3, _width/2-5, "%s", quit.c_str());
-  while(getch() != 'q');    // Wait for user input to quit
+  // draw the updated position
+  int row = _sl.front().first; 
+  int col = _sl.front().second; 
+  attron(COLOR_PAIR(snake_color));
+  move(row,col); 
+  addch(SNAKE_CHAR); 
+  refresh(); 
 }
 
-void Snake::DrawSnake() {
 
+/* called every time the snake moves to a new square to check for:
+// Snake bit himself
+// Snake hit wall
+// Snake ate food 
+  runtime: O(length)
+   else the square is empty
+*/
+int Snake::CheckHeadPos() {
+  auto head = _sl.front(); 
+  if(head == _fl) {
+    return food; 
+  }
+  else if(head.first < 1 || head.second < 1 || 
+          head.first > _height-2 || head.second > _width-2) {
+    return wall; 
+  }
+  auto itr = _sl.begin(); 
+  itr++; // head
+  itr++; // 3 is first part you can reach
+  itr++; 
+  for(itr; itr != _sl.end(); itr++) {
+    if(*itr == head) {
+      return snake; 
+    }
+  }
+  return empty; 
 }
 
-void Snake::EraseSnake() {
-
-}
-
-// new head position calculated using direction
-// this function is called every WAIT_TIME depending on difficulty
+// pop_back & push front depending on direction of travel
+// displays this to the window
 void Snake::MoveSnake() {
-  // erase tail
-  int old = _snake_loc.size() - 1; 
-  // move(_snake_loc[old].first, _snake_loc[old].second); 
-  // addch(' '); 
-  
-  while(old > 1) {
-    _snake_loc[old] = _snake_loc[old-1]; 
-    old--;
-  }
-
-  switch (_dir)
-  {
-  case KEY_LEFT:
-    /* code */
-    _snake_loc[0].second = _snake_loc[0].second - 1;
-    break;
-  case KEY_RIGHT:
-    /* code */
-    _snake_loc[0].second = _snake_loc[0].second + 1;
-    break;
-  case KEY_UP:
-    /* code */
-    _snake_loc[0].first = _snake_loc[0].first - 1;
-    break;
-  case KEY_DOWN:
-    /* code */
-    _snake_loc[0].first = _snake_loc[0].first + 1;
-    break;
-  default:
-    break;
-  }
-  //move(_snake_loc[0].first, _snake_loc[0].second);  
+  int row = _sl.back().first; 
+  int col = _sl.back().second; 
+  move(row,col); 
+  attron(COLOR_PAIR(blank_color)); // Change color
+  addch(' '); 
+  _sl.pop_back(); 
+  AddSegmentFront(); 
 }
 
-int Snake::CheckHeadPos(){
-  int ret = 0;
+// set the direction of the snake
+void Snake::SetSDirection(int in_dir) {
+  std::lock_guard<std::mutex> guard(dir_mutex);
+  _dir = in_dir; 
+}
 
-} 
+// get curr dir
+int Snake::GetSDir() {
+  std::lock_guard<std::mutex> guard(dir_mutex);
+  return _dir; 
+}
